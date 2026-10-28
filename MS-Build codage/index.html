@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MS-Build — Création de sites web professionnels</title>
+    <meta name="description" content="MS-Build crée des sites web professionnels, modernes et adaptés aux entreprises et indépendants.">
+
+    <!-- Favicon (Logo dans l'onglet du navigateur) -->
+    <link rel="icon" type="image/jpeg" href="preview/LogoMS-Build.jpg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Police Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 999px;
+        }
+
+        .modal-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 1);
+        }
+
+        .config-input {
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .config-input:focus {
+            border-color: rgb(59 130 246);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            outline: none;
+        }
+
+        .plan-card,
+        .group {
+            transition: all 0.25s ease;
+        }
+
+        .plan-card:hover {
+            border-color: rgba(59, 130, 246, 0.9);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes pulseProgress {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .loader-progress {
+            animation: pulseProgress 1.4s ease-in-out infinite;
+        }
+
+        /* --- Animation d'ouverture de la Modale & Effet Matrice IA interne --- */
+        @keyframes modalAIEntry {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+                filter: brightness(1.5) blur(4px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: brightness(1) blur(0px);
+            }
+        }
+
+        .modal-ai-animate {
+            animation: modalAIEntry 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            position: relative;
+            background-color: rgb(15 23 42); /* slate-900 */
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
+                linear-gradient(to right, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px, 25px 25px;
+        }
+
+        /* --- Effet Grille Cybernétique & Éclairs lumineux (Hero) --- */
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, #3b82f6, #818cf8, transparent);
+            animation: heroLightningScan 4s linear infinite;
+            z-index: 5;
+        }
+
+        @keyframes heroLightningScan {
+            0% {
+                transform: translateX(-100%) translateY(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) translateY(400px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cyberPulse {
+            0%, 100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .cyber-glow {
+            animation: cyberPulse 4s ease-in-out infinite;
+        }
+
+        /* --- Style Footer Réseau de Neurones Animé --- */
+        .tech-footer {
+            background-color: #030712;
+            border-top: 2px solid rgba(6, 182, 212, 0.6);
+            box-shadow: 0 -25px 60px -10px rgba(59, 130, 246, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, #3b82f6, #818cf8, transparent);
+            animation: dataStreamScan 3s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes dataStreamScan {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-white antialiased">
+
+    <!-- ========================================================= -->
+    <!-- NAVBAR -->
+    <!-- ========================================================= -->
+
+    <header class="fixed top-0 left-0 right-0 z-40 border-b border-white/5 bg-slate-950/90 backdrop-blur-xl">
+
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+
+            <a href="#accueil" class="flex items-center gap-3 group">
+                <img
+                    src="preview/LogoMS-Build.jpg"
+                    alt="MS-Build"
+                    class="h-10 w-10 rounded-xl object-cover border border-white/10 group-hover:border-blue-500 transition"
+                >
+
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold tracking-tight leading-tight">
+                        MS<span class="text-blue-500">-Build</span>
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-medium tracking-wide">
+                        by M.SCHULER-Dev
+                    </span>
+                </div>
+            </a>
+
+            <div class="hidden items-center gap-8 md:flex">
+
+                <a href="#accueil" class="text-sm text-slate-300 transition hover:text-blue-400 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                    Accueil
+                </a>
+
+                <a href="#offres" class="text-sm text-slate-300 transition hover:text-blue-400 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                    Offres
+                </a>
+
+                <a href="#realisations" class="text-sm text-slate-300 transition hover:text-blue-400 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                    Réalisations
+                </a>
+
+                <a href="#contact" class="text-sm text-slate-300 transition hover:text-blue-400 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                    Contact
+                </a>
+
+            </div>
+
+            <button
+                type="button"
+                data-open-configurator
+                class="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+            >
+                Démarrer
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- ========================================================= -->
+        <!-- HERO -->
+        <!-- ========================================================= -->
+
+        <section id="accueil" class="relative overflow-hidden pt-40 pb-28 cyber-grid">
+
+            <div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+                <div class="absolute left-1/2 top-1/3 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/25 blur-[160px] cyber-glow"></div>
+                <div class="absolute left-1/3 top-1/4 h-[350px] w-[500px] -translate-x-1/2 rounded-full bg-cyan-500/15 blur-[140px] animate-pulse"></div>
+                <div class="absolute right-1/4 top-1/2 h-[400px] w-[600px] rounded-full bg-indigo-600/20 blur-[150px]"></div>
+            </div>
+
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+
+                <div class="mx-auto max-w-4xl text-center">
+
+                    <div class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-blue-500/40 bg-blue-600/15 px-4 py-2 text-sm text-blue-300 shadow-[0_0_25px_rgba(59,130,246,0.4)] backdrop-blur-md">
+                        <span class="flex h-2.5 w-2.5 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500 shadow-[0_0_10px_#06b6d4]"></span>
+                        </span>
+                        <span class="font-medium tracking-wide">🚀 Création web sur-mesure & Accompagnement</span>
+                    </div>
+
+                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl leading-[1.1]">
+                        Votre activité mérite <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(59,130,246,0.7)]">
+                            un site à la hauteur.
+                        </span>
+                    </h1>
+
+                    <p class="mx-auto mt-7 max-w-2xl text-lg sm:text-xl leading-relaxed text-slate-300">
+                        Des sites modernes, rapides et professionnels pour présenter votre activité,
+                        vos services et permettre à vos clients de vous contacter facilement.
+                    </p>
+
+                    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+
+                        <button
+                            type="button"
+                            data-open-configurator
+                            class="group relative rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-xl shadow-blue-600/40 transition-all duration-300 hover:bg-blue-500 hover:scale-[1.02] hover:shadow-[0_0_35px_rgba(59,130,246,0.9)]"
+                        >
+                            <span>Configurer mon projet</span>
+                            <span class="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1.5">→</span>
+                        </button>
+
+                        <a
+                            href="#realisations"
+                            class="rounded-xl border border-white/15 bg-white/5 px-8 py-4 font-semibold text-slate-200 backdrop-blur-sm transition-all duration-300 hover:border-blue-400/80 hover:bg-blue-600/15 hover:text-white hover:shadow-[0_0_25px_rgba(59,130,246,0.4)]"
+                        >
+                            Voir les réalisations
+                        </a>
+
+                    </div>
+
+                    <div class="mt-6 text-sm text-slate-400 tracking-wide font-medium">
+                        ⚡ Sans engagement • Accompagnement personnalisé
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- AVANTAGES -->
+        <!-- ========================================================= -->
+
+        <section class="border-y border-white/5 bg-white/[0.02] py-20">
+
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+                <div class="grid gap-8 md:grid-cols-3">
+
+                    <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition hover:border-blue-500/70 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 text-xl text-blue-400">
+                            ✍️
+                        </div>
+
+                        <h3 class="text-lg font-bold">
+                            Brief sur-mesure
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-400">
+                            Décrivez vos besoins précis pour nous permettre de concevoir un site parfaitement adapté à votre image.
+                        </p>
+                    </div>
+
+
+                    <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition hover:border-blue-500/70 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 text-xl text-blue-400">
+                            📱
+                        </div>
+
+                        <h3 class="text-lg font-bold">
+                            Clé en main & Professionnel
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-400">
+                            Un site pensé et structuré selon votre métier, vos services, vos horaires et votre zone d'activité.
+                        </p>
+                    </div>
+
+
+                    <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-7 transition hover:border-blue-500/70 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 text-xl text-blue-400">
+                            🎯
+                        </div>
+
+                        <h3 class="text-lg font-bold">
+                            Zéro contrainte technique
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-400">
+                            Nous gérons toute la conception technique pour vous permettre de vous concentrer uniquement sur votre cœur de métier.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- OFFRES -->
+        <!-- ========================================================= -->
+
+        <section id="offres" class="py-24">
+
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+                <div class="mx-auto max-w-2xl text-center">
+
+                    <p class="text-sm font-semibold uppercase tracking-widest text-blue-400">
+                        Nos offres
+                    </p>
+
+                    <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+                        Une formule adaptée à vos besoins
+                    </h2>
+
+                    <p class="mt-4 text-slate-400">
+                        Choisissez la solution clé en main qui correspond le mieux à votre activité, sans mauvaise surprise.
+                    </p>
+
+                </div>
+
+
+                <div class="mt-14 grid gap-8 lg:grid-cols-3 items-stretch">
+
+                    <!-- Essentiel -->
+
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between text-left relative transition hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)]">
+
+                        <div>
+                            <p class="text-sm font-semibold text-blue-400">
+                                ESSENTIEL
+                            </p>
+
+                            <h3 class="mt-3 text-2xl font-bold">
+                                29€<span class="text-base font-normal text-slate-500">/mois</span>
+                            </h3>
+
+                            <p class="mt-1 text-xs text-amber-400 font-medium">
+                                + 69€ de frais de mise en service (1er mois uniquement)
+                            </p>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                Idéal pour les artisans et commerçants qui souhaitent une présence en ligne claire et professionnelle.
+                            </p>
+
+                            <ul class="mt-7 space-y-4 text-sm text-slate-300">
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Site vitrine professionnel :</strong> Présentation complète de votre activité, de vos prestations et de votre grille tarifaire.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Design Responsive :</strong> Affichage optimisé et fluide sur tous les écrans (ordinateurs, tablettes et smartphones).</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Contact direct :</strong> Formulaire et coordonnées intégrés pour que vos clients vous joignent facilement.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8">
+                            <button
+                                type="button"
+                                data-open-configurator
+                                class="w-full rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+                            >
+                                Choisir cette formule
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Pro -->
+
+                    <div class="relative rounded-3xl border border-blue-500/50 bg-slate-900/80 p-8 shadow-2xl shadow-blue-950/40 flex flex-col justify-between text-left transition hover:border-blue-400 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]">
+
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-4 py-1 text-xs font-bold shadow-[0_0_10px_rgba(59,130,246,0.8)]">
+                            POPULAIRE
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold text-blue-400">
+                                PRO
+                            </p>
+
+                            <h3 class="mt-3 text-2xl font-bold">
+                                49€<span class="text-base font-normal text-slate-500">/mois</span>
+                            </h3>
+
+                            <p class="mt-1 text-xs text-amber-400 font-medium">
+                                + 99€ de frais de mise en service (1er mois uniquement)
+                            </p>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                La solution complète pour développer votre activité et automatiser la prise de contact.
+                            </p>
+
+                            <ul class="mt-7 space-y-4 text-sm text-slate-300">
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Formule Essentiel incluse :</strong> Retrouvez toute la structure de base pour présenter votre activité et vos tarifs.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Agenda / Planning en ligne :</strong> Permettez à vos clients de consulter vos disponibilités et de réserver directement depuis votre site.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Expérience mobile complète :</strong> Navigation et prise de rendez-vous adaptées à tout type d'écran.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8">
+                            <button
+                                type="button"
+                                data-open-configurator
+                                class="w-full rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+                            >
+                                Choisir cette formule
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- E-commerce -->
+
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 shadow-xl flex flex-col justify-between text-left relative transition hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)]">
+
+                        <div>
+                            <p class="text-sm font-semibold text-blue-400">
+                                E-COMMERCE
+                            </p>
+
+                            <h3 class="mt-3 text-2xl font-bold">
+                                79€<span class="text-base font-normal text-slate-500">/mois</span>
+                            </h3>
+
+                            <p class="mt-1 text-xs text-amber-400 font-medium">
+                                + 99€ de frais de mise en service (1er mois uniquement)
+                            </p>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                Conçu pour vendre vos produits et services directement en ligne avec une gestion complète.
+                            </p>
+
+                            <ul class="mt-7 space-y-4 text-sm text-slate-300">
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Catalogue & fiches produits :</strong> Vos articles présentés en grille et cliquables individuellement (jusqu'à 30 articles intégrés).</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Achat et Vente en ligne :</strong> Encaissez vos paiements et vendez vos produits directement sur Internet en toute sécurité.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-400 font-bold mr-2">✓</span>
+                                    <span><strong>Pages sur-mesure incluses :</strong> Jusqu'à 10 pages personnalisées incluses (surplus au-delà pour les gros projets).</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-8">
+                            <button
+                                type="button"
+                                data-open-configurator
+                                class="w-full rounded-xl bg-blue-600 px-5 py-3 font-semibold transition hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]"
+                            >
+                                Choisir cette formule
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- REALISATIONS -->
+        <!-- ========================================================= -->
+
+        <section id="realisations" class="border-y border-white/5 bg-white/[0.02] py-24">
+
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+                <div class="text-center">
+
+                    <p class="text-sm font-semibold uppercase tracking-widest text-blue-400">
+                        Réalisations
+                    </p>
+
+                    <h2 class="mt-3 text-3xl font-bold sm:text-4xl">
+                        Des exemples adaptés à votre métier
+                    </h2>
+
+                    <p class="mx-auto mt-4 max-w-2xl text-slate-400">
+                        Découvrez quelques exemples de sites vitrines réalisés pour différents secteurs d'activité.
+                    </p>
+
+                </div>
+
+
+                <div class="mt-14 grid gap-8 md:grid-cols-2">
+
+                    <!-- Traiteur -->
+
+                    <article class="group overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 transition hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]">
+
+                        <div class="aspect-video overflow-hidden">
+
+                            <img
+                                src="preview/traiteur-preview.jpg"
+                                alt="Exemple de site pour un traiteur"
+                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            >
+
+                        </div>
+
+                        <div class="p-7">
+
+                            <p class="text-sm font-semibold text-blue-400">
+                                TRAITEUR
+                            </p>
+
+                            <h3 class="mt-2 text-2xl font-bold">
+                                Site vitrine pour traiteur
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                Présentation de l'activité, prestations, événements et coordonnées.
+                            </p>
+
+                            <a
+                                href="demo-traiteur/index.html"
+                                class="mt-5 inline-flex text-sm font-semibold text-blue-400 transition hover:text-blue-300 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]"
+                            >
+                                Voir la démonstration →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Paysagiste -->
+
+                    <article class="group overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 transition hover:border-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]">
+
+                        <div class="aspect-video overflow-hidden">
+
+                            <img
+                                src="preview/paysagiste-preview.jpg"
+                                alt="Exemple de site pour un paysagiste"
+                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            >
+
+                        </div>
+
+                        <div class="p-7">
+
+                            <p class="text-sm font-semibold text-blue-400">
+                                PAYSAGISTE
+                            </p>
+
+                            <h3 class="mt-2 text-2xl font-bold">
+                                Site vitrine pour paysagiste
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-6 text-slate-400">
+                                Présentation des prestations d'aménagement extérieur et entretien des espaces verts.
+                            </p>
+
+                            <a
+                                href="demo-paysagiste/index.html"
+                                class="mt-5 inline-flex text-sm font-semibold text-blue-400 transition hover:text-blue-300 hover:drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]"
+                            >
+                                Voir la démonstration →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- CTA FINAL -->
+        <!-- ========================================================= -->
+
+        <section id="contact" class="py-24">
+
+            <div class="mx-auto max-w-5xl px-6 lg:px-8">
+
+                <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900 px-8 py-16 text-center sm:px-12 transition hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+
+                    <div class="absolute left-1/2 top-0 -z-0 h-48 w-96 -translate-x-1/2 rounded-full bg-blue-600/10 blur-3xl"></div>
+
+                    <div class="relative z-10">
+
+                        <h2 class="text-3xl font-bold sm:text-4xl">
+                            Donnez vie à votre projet dès aujourd'hui
+                        </h2>
+
+                        <p class="mx-auto mt-5 max-w-2xl text-slate-400">
+                            Renseignez votre projet en quelques clics et confiez-nous la création de votre site web professionnel sur-mesure.
+                        </p>
+
+                        <button
+                            type="button"
+                            data-open-configurator
+                            class="mt-8 rounded-xl bg-blue-600 px-7 py-3.5 font-semibold text-white transition hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.8)]"
+                        >
+                            Configurer mon projet sur-mesure →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================= -->
+
+    <footer class="tech-footer text-slate-400 relative overflow-hidden">
+        <canvas id="neuralFooterCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70"></canvas>
+
+        <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8 relative z-10">
+
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+                <!-- Colonne 1 : Identité -->
+                <div>
+                    <div class="flex items-center gap-3">
+                        <img
+                            src="preview/LogoMS-Build.jpg"
+                            alt="MS-Build"
+                            class="h-10 w-10 rounded-xl object-cover border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                        />
+                        <div class="flex flex-col">
+                            <span class="font-bold text-white tracking-wide leading-tight">
+                                MS<span class="text-blue-500">-Build</span>
+                            </span>
+                            <span class="text-[10px] text-slate-400 font-medium">
+                                by M.SCHULER-Dev
+                            </span>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm leading-6 text-slate-400">
+                        Solutions web modernes, rapides et sur-mesure pour valoriser les artisans, commerçants et indépendants.
+                    </p>
+                </div>
+
+                <!-- Colonne 2 : Navigation -->
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Navigation</h3>
+                    <ul class="mt-4 space-y-3 text-sm">
+                        <li>
+                            <a href="#accueil" class="transition hover:text-blue-400">Accueil</a>
+                        </li>
+                        <li>
+                            <a href="#offres" class="transition hover:text-blue-400">Nos Offres</a>
+                        </li>
+                        <li>
+                            <a href="#realisations" class="transition hover:text-blue-400">Réalisations</a>
+                        </li>
+                        <li>
+                            <a href="#contact" class="transition hover:text-blue-400">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 3 : Nos Formules -->
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Nos Formules</h3>
+                    <ul class="mt-4 space-y-3 text-sm text-slate-400">
+                        <li>Essentiel (Site Vitrine)</li>
+                        <li>Pro (Agenda en ligne)</li>
+                        <li>E-Commerce (Vente en ligne)</li>
+                    </ul>
+                </div>
+
+                <!-- Colonne 4 : Contact -->
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wider">Contact direct</h3>
+                    <div class="mt-4 space-y-3 text-sm">
+                        <a
+                            href="tel:0651576368"
+                            class="block transition hover:text-blue-400"
+                        >
+                            📞 06.51.57.63.68
+                        </a>
+                        <a
+                            href="mailto:m.schuler.dev@gmail.com"
+                            class="block transition hover:text-blue-400"
+                        >
+                            ✉️ m.schuler.dev@gmail.com
+                        </a>
+                        <p class="text-xs text-slate-500 mt-2">
+                            MS-Build — Propulsé par M.SCHULER-Dev
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Ligne de bas de footer avec copyright centré -->
+            <div class="mt-12 border-t border-cyan-500/20 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <div class="order-2 md:order-1 flex gap-6">
+                    <span class="hover:text-cyan-400 cursor-pointer transition">Mentions légales</span>
+                    <span class="hover:text-cyan-400 cursor-pointer transition">Politique de confidentialité</span>
+                </div>
+                <div class="order-1 md:order-2 text-center text-slate-400 font-medium">
+                    © 2026 MS-Build (M.SCHULER-Dev) — Tous droits réservés.
+                </div>
+                <div class="order-3 opacity-0 hidden md:block">
+                    <div class="w-32"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ========================================================= -->
+    <!-- MODALE CONFIGURATEUR -->
+    <!-- ========================================================= -->
+
+    <div
+        id="configurator-modal"
+        class="fixed inset-0 z-[100] hidden"
+        aria-hidden="true"
+    >
+
+        <!-- Fond -->
+
+        <div
+            id="configurator-backdrop"
+            class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
+        ></div>
+
+
+        <!-- Fenêtre (Modale avec effet matrice interne) -->
+
+        <div class="relative flex min-h-full items-center justify-center p-4 sm:p-6">
+
+            <div
+                id="configurator-window"
+                class="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-cyan-500/30 shadow-2xl shadow-blue-950/60 modal-ai-animate"
+            >
+
+                <!-- Header de la modale avec le logo MS-Build -->
+
+                <div class="flex items-center justify-between border-b border-white/10 px-6 py-5 relative">
+                    <div class="flex items-center gap-3">
+                        <img
+                            src="preview/LogoMS-Build.jpg"
+                            alt="MS-Build"
+                            class="h-9 w-9 rounded-xl object-cover border border-cyan-500/40 shadow-[0_0_12px_rgba(59,130,246,0.4)]"
+                        />
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-widest text-cyan-400">
+                                Configuration du projet
+                            </p>
+                            <h2 class="mt-0.5 text-xl font-bold">
+                                Préparez votre cahier des charges
+                            </h2>
+                        </div>
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="config-close"
+                        class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-xl text-slate-400 transition hover:border-blue-500 hover:text-white hover:shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+                        aria-label="Fermer"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- Progression -->
+
+                <div class="border-b border-white/10 px-6 py-5">
+
+                    <div class="grid grid-cols-3 gap-3">
+
+                        <div>
+                            <div id="progress-bar-1" class="h-1.5 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
+                            <p id="progress-label-1" class="mt-2 text-xs font-semibold text-blue-400">1. Activité</p>
+                        </div>
+
+                        <div>
+                            <div id="progress-bar-2" class="h-1.5 rounded-full bg-white/10"></div>
+                            <p id="progress-label-2" class="mt-2 text-xs font-semibold text-slate-500">2. Prestations & Fichiers</p>
+                        </div>
+
+                        <div>
+                            <div id="progress-bar-3" class="h-1.5 rounded-full bg-white/10"></div>
+                            <p id="progress-label-3" class="mt-2 text-xs font-semibold text-slate-500">3. Contact</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Contenu scrollable -->
+
+                <div class="modal-scroll overflow-y-auto px-6 py-6">
+
+
+                    <!-- ================================================= -->
+                    <!-- ÉTAPE 1 -->
+                    <!-- ================================================= -->
+
+                    <div id="step-1">
+
+                        <div class="mb-7">
+                            <h3 class="text-2xl font-bold">Présentez votre activité</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-400">
+                                Ces informations permettront à MS-Build de comprendre votre structure.
+                            </p>
+                        </div>
+
+                        <div class="space-y-5">
+                            <div>
+                                <label for="company-name" class="mb-2 block text-sm font-medium text-slate-200">Nom de l'entreprise *</label>
+                                <input id="company-name" type="text" required class="config-input w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 hover:border-blue-500/50" placeholder="Ex. L'atelier du Pain Doré">
+                                <p id="company-name-error" class="mt-2 hidden text-sm text-red-400">Veuillez renseigner le nom de votre entreprise.</p>
+                            </div>
+
+                            <div>
+                                <label for="activity-sector" class="mb-2 block text-sm font-medium text-slate-200">Secteur d'activité *</label>
+                                <input id="activity-sector" type="text" required class="config-input w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 hover:border-blue-500/50" placeholder="Ex. Boulangerie-Pâtisserie">
+                                <p id="activity-sector-error" class="mt-2 hidden text-sm text-red-400">Veuillez renseigner votre secteur d'activité.</p>
+                            </div>
+
+                            <div>
+                                <label for="activity-location" class="mb-2 block text-sm font-medium text-slate-200">Ville / zone d'activité *</label>
+                                <input id="activity-location" type="text" required class="config-input w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 hover:border-blue-500/50" placeholder="Ex. Forbach">
+                                <p id="activity-location-error" class="mt-2 hidden text-sm text-red-400">Veuillez renseigner votre ville ou zone d'activité.</p>
+                            </div>
+
+                            <div id="step-1-error" class="hidden rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+                                Veuillez compléter les champs obligatoires avant de continuer.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- ÉTAPE 2 (AVEC UPLOAD DE FICHIERS CUMULATIFS) -->
+                    <!-- ================================================= -->
+
+                    <div id="step-2" class="hidden">
+
+                        <div class="mb-7">
+                            <h3 class="text-2xl font-bold">Décrivez votre projet & vos visuels</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-400">
+                                Indiquez vos prestations principales et ajoutez vos fichiers (logos, photos de locaux, images...).
+                            </p>
+                        </div>
+
+                        <div class="space-y-7">
+                            <div>
+                                <label for="services-description" class="mb-2 block text-sm font-medium text-slate-200">Vos prestations / services & envies *</label>
+                                <textarea id="services-description" required rows="4" class="config-input w-full resize-none rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600 hover:border-blue-500/50" placeholder="Ex. Viennoiseries, pâtisseries fines, salon de thé, commandes sur-mesure..."></textarea>
+                                <p id="services-description-error" class="mt-2 hidden text-sm text-red-400">Veuillez décrire au moins vos principales prestations.</p>
+                            </div>
+
+                            <!-- ZONE DE UPLOAD DE FICHIERS MULTIPLES CUMULATIFS -->
+                            <div>
+                                <label class="mb-2 block text-sm font-medium text-slate-200">📸 Vos photos, logo ou visuels (depuis PC ou téléphone)</label>
+                                <input id="client-files" type="file" multiple accept=".jpg,.jpeg,.png,.pdf,.txt" class="w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer">
+                                <p class="mt-1.5 text-xs text-blue-400 font-medium">💡 Formats acceptés : JPG, JPEG, PNG, PDF</p>
+                                <!-- Conteneur pour afficher la liste des fichiers sélectionnés -->
+                                <div id="file-list-display" class="mt-3 space-y-2"></div>
+                            </div>
+
+                            <!-- Formules -->
+                            <div>
+                                <p class="mb-3 text-sm font-medium text-slate-200">Choisissez votre formule</p>
+                                <div class="grid gap-4 md:grid-cols-3">
+                                    <!-- Essentiel -->
+                                    <label class="plan-card cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-blue-500" data-plan-card="essentiel">
+                                        <input type="radio" name="plan" value="essentiel" class="sr-only" checked>
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p class="font-bold">Essentiel</p>
+                                                <p class="mt-1 text-xl font-bold">29€<span class="text-xs font-normal text-slate-500">/mois</span></p>
+                                            </div>
+                                            <span data-plan-check="essentiel" class="flex h-6 w-6 items-center justify-center rounded-full border border-blue-600 bg-blue-600 text-xs text-white shadow-[0_0_10px_rgba(59,130,246,0.8)]">✓</span>
+                                        </div>
+                                    </label>
+
+                                    <!-- Pro -->
+                                    <label class="plan-card cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-blue-500" data-plan-card="pro">
+                                        <input type="radio" name="plan" value="pro" class="sr-only">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p class="font-bold">Pro</p>
+                                                <p class="mt-1 text-xl font-bold">49€<span class="text-xs font-normal text-slate-500">/mois</span></p>
+                                            </div>
+                                            <span data-plan-check="pro" class="flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-transparent text-xs text-transparent">✓</span>
+                                        </div>
+                                    </label>
+
+                                    <!-- E-commerce -->
+                                    <label class="plan-card cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-blue-500" data-plan-card="ecommerce">
+                                        <input type="radio" name="plan" value="ecommerce" class="sr-only">
+                                        <div class="flex items-start justify-between gap-3">
+                                            <div>
+                                                <p class="font-bold">E-Commerce</p>
+                                                <p class="mt-1 text-xl font-bold">79€<span class="text-xs font-normal text-slate-500">/mois</span></p>
+                                            </div>
+                                            <span data-plan-check="ecommerce" class="flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-transparent text-xs text-transparent">✓</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- ÉTAPE 3 -->
+                    <!-- ================================================= -->
+
+                    <div id="step-3" class="hidden">
+
+                        <div class="mb-7">
+                            <h3 class="text-2xl font-bold">Comment pouvons-nous vous contacter ?</h3>
+                            <p class="mt-2 text-sm leading-6 text-slate-400">
+                                Renseignez vos coordonnées pour finaliser votre demande de projet sur-mesure.
+                            </p>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label for="client-phone" class="mb-2 block text-sm font-medium text-slate-200">Téléphone *</label>
+                                <input id="client-phone" type="tel" required class="config-input w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600" placeholder="06 12 34 56 78">
+                                <p id="client-phone-error" class="mt-2 hidden text-sm text-red-400">Veuillez renseigner votre numéro de téléphone.</p>
+                            </div>
+
+                            <div>
+                                <label for="client-email" class="mb-2 block text-sm font-medium text-slate-200">Adresse e-mail *</label>
+                                <input id="client-email" type="email" required class="config-input w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-600" placeholder="vous@entreprise.fr">
+                                <p id="client-email-error" class="mt-2 hidden text-sm text-red-400">Veuillez renseigner une adresse e-mail valide.</p>
+                            </div>
+
+                            <div id="step-3-error" class="hidden rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+                                Veuillez vérifier les informations obligatoires.
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- CHARGEMENT -->
+                    <!-- ================================================= -->
+
+                    <div id="config-loader" class="hidden py-12 text-center">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-blue-500/30 bg-blue-600/10 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                            <div class="loader-spinner h-8 w-8 rounded-full border-2 border-white/10 border-t-blue-500"></div>
+                        </div>
+                        <h3 id="config-loader-text" class="mt-6 text-xl font-bold">Envoi de votre brief et des fichiers...</h3>
+                        <p class="mt-2 text-sm text-slate-500">Merci de patienter quelques instants.</p>
+                    </div>
+
+
+                    <!-- ================================================= -->
+                    <!-- SUCCÈS -->
+                    <!-- ================================================= -->
+
+                    <div id="config-success" class="hidden py-12 text-center" aria-hidden="true">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-3xl text-emerald-400 border border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                            ✓
+                        </div>
+                        <h3 id="config-success-title" class="mt-6 text-2xl font-bold">Brief transmis avec succès !</h3>
+                        <p id="config-success-message" class="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-400">
+                            Vos fichiers et votre demande ont bien été reçus par MS-Build. Nous étudions votre projet et revenons vers vous très rapidement.
+                        </p>
+                        <button type="button" id="config-success-close" class="mt-8 rounded-xl bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-500">
+                            Fermer
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- BOUTONS DE NAVIGATION -->
+                <div id="config-navigation" class="flex items-center justify-between gap-3 border-t border-white/10 px-6 py-5">
+                    <button type="button" id="config-prev-step-2" class="hidden rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:border-blue-500">
+                        ← Précédent
+                    </button>
+                    <button type="button" id="config-prev-step-3" class="hidden rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-slate-300 transition hover:border-blue-500">
+                        ← Précédent
+                    </button>
+
+                    <div class="flex-1"></div>
+
+                    <button type="button" id="config-next-step" class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold transition hover:bg-blue-500">
+                        Suivant →
+                    </button>
+                    <button type="button" id="config-next-step-2" class="hidden rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold transition hover:bg-blue-500">
+                        Suivant →
+                    </button>
+                    <button type="button" id="config-submit" class="hidden rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold transition hover:bg-blue-500 shadow-lg">
+                        Envoyer mon brief →
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- JAVASCRIPT INTÉGRÉ -->
+    <!-- ========================================================= -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- ANIMATION CANVAS RÉSEAU DE NEURONES (FOOTER) ---
+            const canvas = document.getElementById('neuralFooterCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                function getParticleCount() { return window.innerWidth > 1024 ? 120 : 65; }
+                function resizeCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+                window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+                resizeCanvas();
+                function initParticles() {
+                    particles = [];
+                    for (let i = 0; i < getParticleCount(); i++) {
+                        particles.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            vx: (Math.random() - 0.5) * 0.9,
+                            vy: (Math.random() - 0.5) * 0.9,
+                            radius: Math.random() * 2.2 + 1.2
+                        });
+                    }
+                }
+                initParticles();
+                function animateNeural() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.9)';
+                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.35)';
+                    ctx.lineWidth = 1.1;
+                    particles.forEach((p, index) => {
+                        p.x += p.vx; p.y += p.vy;
+                        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                        for (let j = index + 1; j < particles.length; j++) {
+                            let p2 = particles[j];
+                            if (Math.hypot(p.x - p2.x, p.y - p2.y) < 130) {
+                                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+                            }
+                        }
+                    });
+                    requestAnimationFrame(animateNeural);
+                }
+                animateNeural();
+            }
+
+            // --- CONFIGURATEUR MODAL & GESTION DES FICHIERS CUMULATIFS ---
+            const modal = document.getElementById('configurator-modal');
+            const step1 = document.getElementById('step-1'), step2 = document.getElementById('step-2'), step3 = document.getElementById('step-3');
+            const next1 = document.getElementById('config-next-step'), prev2 = document.getElementById('config-prev-step-2'), next2 = document.getElementById('config-next-step-2'), prev3 = document.getElementById('config-prev-step-3'), submit = document.getElementById('config-submit');
+            const loader = document.getElementById('config-loader'), success = document.getElementById('config-success'), nav = document.getElementById('config-navigation');
+
+            let accumulatedFiles = [];
+            const fileInput = document.getElementById('client-files');
+            const fileListDisplay = document.getElementById('file-list-display');
+
+            fileInput.addEventListener('change', function(e) {
+                const newFiles = e.target.files;
+                for (let i = 0; i < newFiles.length; i++) {
+                    accumulatedFiles.push(newFiles[i]);
+                }
+                renderFileList();
+                fileInput.value = '';
+            });
+
+            function renderFileList() {
+                fileListDisplay.innerHTML = '';
+                if (accumulatedFiles.length > 0) {
+                    const headerTxt = document.createElement('p');
+                    headerTxt.className = "text-xs font-semibold text-blue-400 mb-1";
+                    headerTxt.innerText = `Fichiers prêts à l'envoi (${accumulatedFiles.length}) :`;
+                    fileListDisplay.appendChild(headerTxt);
+
+                    accumulatedFiles.forEach((file, index) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = "flex items-center justify-between bg-slate-900 border border-white/10 px-3 py-2 rounded-xl text-xs text-slate-300";
+                        fileItem.innerHTML = `<span>📄 ${file.name}</span> <button type="button" class="text-red-400 font-bold hover:text-red-300 ml-2 px-1" onclick="window.removeFile(${index})">×</button>`;
+                        fileListDisplay.appendChild(fileItem);
+                    });
+                }
+            }
+
+            window.removeFile = function(index) {
+                accumulatedFiles.splice(index, 1);
+                renderFileList();
+            };
+
+            // Fonction de réinitialisation complète de la modale
+            function resetConfiguratorModal() {
+                // Vider les inputs texte et textarea
+                document.getElementById('company-name').value = '';
+                document.getElementById('activity-sector').value = '';
+                document.getElementById('activity-location').value = '';
+                document.getElementById('services-description').value = '';
+                document.getElementById('client-phone').value = '';
+                document.getElementById('client-email').value = '';
+
+                // Vider les fichiers cumulés
+                accumulatedFiles = [];
+                renderFileList();
+                fileInput.value = '';
+
+                // Remettre l'étape 1 et cacher les autres
+                step1.classList.remove('hidden');
+                step2.classList.add('hidden');
+                step3.classList.add('hidden');
+                loader.classList.add('hidden');
+                success.classList.add('hidden');
+                nav.classList.remove('hidden');
+
+                // Boutons de navigation par défaut
+                next1.classList.remove('hidden');
+                prev2.classList.add('hidden');
+                next2.classList.add('hidden');
+                prev3.classList.add('hidden');
+                submit.classList.add('hidden');
+
+                // Fermer la modale
+                modal.classList.add('hidden');
+            }
+
+            document.querySelectorAll('[data-open-configurator]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); modal.classList.remove('hidden'); }));
+            
+            // Boutons de fermeture reliés à la réinitialisation
+            document.getElementById('config-close').addEventListener('click', resetConfiguratorModal);
+            document.getElementById('configurator-backdrop').addEventListener('click', resetConfiguratorModal);
+            document.getElementById('config-success-close').addEventListener('click', resetConfiguratorModal);
+
+            next1.addEventListener('click', () => { step1.classList.add('hidden'); step2.classList.remove('hidden'); next1.classList.add('hidden'); prev2.classList.remove('hidden'); next2.classList.remove('hidden'); });
+            prev2.addEventListener('click', () => { step2.classList.add('hidden'); step1.classList.remove('hidden'); prev2.classList.add('hidden'); next2.classList.add('hidden'); next1.classList.remove('hidden'); });
+            next2.addEventListener('click', () => { step2.classList.add('hidden'); step3.classList.remove('hidden'); next2.classList.add('hidden'); prev2.classList.add('hidden'); prev3.classList.remove('hidden'); submit.classList.remove('hidden'); });
+            prev3.addEventListener('click', () => { step3.classList.add('hidden'); step2.classList.remove('hidden'); prev3.classList.add('hidden'); submit.classList.add('hidden'); prev2.classList.remove('hidden'); next2.classList.remove('hidden'); });
+
+            // SOUMISSION AVEC FormData
+            submit.addEventListener('click', async (e) => {
+                e.preventDefault();
+                step3.classList.add('hidden'); nav.classList.add('hidden'); loader.classList.remove('hidden');
+
+                const formData = new FormData();
+                formData.append('companyName', document.getElementById('company-name').value);
+                formData.append('activitySector', document.getElementById('activity-sector').value);
+                formData.append('activityLocation', document.getElementById('activity-location').value);
+                formData.append('servicesDescription', document.getElementById('services-description').value);
+                formData.append('plan', document.querySelector('input[name="plan"]:checked')?.value || 'Essentiel');
+                formData.append('clientPhone', document.getElementById('client-phone').value);
+                formData.append('clientEmail', document.getElementById('client-email').value);
+
+                accumulatedFiles.forEach((file) => {
+                    formData.append('clientFiles', file);
+                });
+
+                try {
+                    const response = await fetch('/api/generate-site', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    loader.classList.add('hidden');
+                    if (data.success) {
+                        success.classList.remove('hidden');
+                        accumulatedFiles = [];
+                        renderFileList();
+                    } else {
+                        step3.classList.remove('hidden'); nav.classList.add('hidden');
+                        alert("Erreur : " + data.error);
+                    }
+                } catch (err) {
+                    loader.classList.add('hidden'); step3.classList.remove('hidden'); nav.classList.remove('hidden');
+                    alert("Impossible de joindre le serveur.");
+                }
+            });
+
+            function updatePlanVisuals() {
+                document.querySelectorAll('[data-plan-card]').forEach(card => {
+                    const radio = card.querySelector('input[name="plan"]');
+                    const check = card.querySelector('span[data-plan-check]') || card.querySelector('span.rounded-full');
+                    if (!radio) return;
+
+                    if (radio.checked) {
+                        card.className = "plan-card cursor-pointer rounded-2xl border border-blue-500 bg-blue-600/10 p-5 shadow-[0_0_20px_rgba(59,130,246,0.3)]";
+                        if (check) {
+                            check.className = "flex h-6 w-6 items-center justify-center rounded-full border border-blue-600 bg-blue-600 text-xs text-white shadow-[0_0_10px_rgba(59,130,246,0.8)]";
+                            check.innerText = "✓";
+                        }
+                    } else {
+                        card.className = "plan-card cursor-pointer rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:border-blue-500";
+                        if (check) {
+                            check.className = "flex h-6 w-6 items-center justify-center rounded-full border border-white/10 bg-transparent text-xs text-transparent";
+                            check.innerText = "✓";
+                        }
+                    }
+                });
+            }
+
+            document.querySelectorAll('[data-plan-card]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const radio = card.querySelector('input[name="plan"]');
+                    if (radio) {
+                        radio.checked = true;
+                        updatePlanVisuals();
+                    }
+                });
+            });
+            
+            updatePlanVisuals();
+        });
+    </script>
+
+</body>
+</html>

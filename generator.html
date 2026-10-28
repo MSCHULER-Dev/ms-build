@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.SCHULER-Dev - Générateur de Site IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wider text-white">M.SCHULER-Dev <span class="text-xs text-slate-400 font-normal">| Générateur IA</span></h1>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-10">
+        <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl">
+            <h2 class="text-2xl font-semibold mb-6">Créer un nouveau site client</h2>
+            
+            <form id="generator-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2">Nom de l'entreprise / de la boutique</label>
+                    <input type="text" id="store-name" required placeholder="Ex: Salon Élégance ou Vélos Express" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-slate-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2">Secteur d'activité / Description pour l'IA</label>
+                    <textarea id="store-desc" rows="3" required placeholder="Ex: Salon de coiffure moderne pour hommes et femmes, prestations de coupe et barbe..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-slate-500 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2">Formule choisie</label>
+                    <select id="store-formula" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-slate-500 focus:outline-none">
+                        <option value="pro">Formule Pro (Site vitrine + Planning / Réservations)</option>
+                        <option value="ecommerce">Formule E-commerce (Catalogue + Produits + Gestion de stock)</option>
+                        <option value="both">Formule Complète (E-commerce + Agenda & Réservations)</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+        <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2">Logo de l'entreprise (Fichier)</label>
+            <input type="file" id="logoFile" accept="image/*" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-400 mb-2">Photo des locaux / salon</label>
+            <input type="file" id="storePhotoFile" accept="image/*" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700">
+        </div>
+    </div>
+                <button type="submit" class="w-full bg-white hover:bg-slate-200 font-medium py-3 rounded-xl transition text-slate-950 text-base">Générer le site et les accès sécurisés</button>
+            </form>
+
+            <!-- Zone de résultat après génération -->
+            <div id="result-box" class="hidden mt-8 p-6 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+                <h3 class="text-lg font-medium text-emerald-400">Site généré avec succès !</h3>
+                <div class="space-y-2 text-sm text-slate-300">
+                    <p><strong>Identifiant (storeId) :</strong> <span id="res-store" class="font-mono text-white"></span></p>
+                    <p><strong>Lien du site web :</strong> <a id="res-sitelink" href="#" target="_blank" class="text-blue-400 underline">Voir le site</a></p>
+                    <p><strong>Lien Dashboard Catalogue :</strong> <a id="res-catlink" href="#" target="_blank" class="text-blue-400 underline">Ouvrir la gestion</a></p>
+                    <p><strong>Lien Dashboard Agenda :</strong> <a id="res-agendalink" href="#" target="_blank" class="text-blue-400 underline">Ouvrir l'agenda</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:3000';
+
+        document.querySelector('button[type="submit"]').addEventListener('click', async (e) => {
+    e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('companyName', document.getElementById('store-name').value);
+            formData.append('activitySector', document.getElementById('store-desc').value);
+            formData.append('activityLocation', "France");
+            formData.append('servicesDescription', document.getElementById('store-desc').value);
+            formData.append('plan', document.getElementById('store-formula').value);
+            
+            const logoInput = document.getElementById('logoFile').files[0];
+            const photoInput = document.getElementById('storePhotoFile').files[0];
+            
+            if (logoInput) formData.append('logoFile', logoInput);
+            if (photoInput) formData.append('storePhotoFile', photoInput);
+
+            try {
+                const res = await fetch(`${API_URL}/api/generate-site`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await res.json();
+                if (res.ok) {
+                    document.getElementById('res-store').innerText = data.storeId;
+                    
+                    // Affichage dynamique du site généré dans un nouvel onglet
+                    const siteLink = document.getElementById('res-sitelink');
+                    siteLink.href = "#";
+                    siteLink.innerText = "Afficher le site web";
+                    siteLink.onclick = (event) => {
+                        event.preventDefault();
+                        const newWindow = window.open();
+                        newWindow.document.write(data.content);
+                        newWindow.document.close();
+                    };
+
+                    document.getElementById('res-catlink').href = data.dashboardUrl;
+                    document.getElementById('res-agendalink').href = data.agendaUrl;
+                    document.getElementById('result-box').classList.remove('hidden');
+                } else {
+                    alert("Erreur du serveur : " + (data.error || "Veuillez réessayer."));
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erreur de connexion au serveur Node.js.");
+            }
+        });
+    </script>
+</body>
+</html>

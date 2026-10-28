@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Propriétaire - Gestion des Rendez-vous</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+
+    <!-- Header neutre -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wider text-white">Espace Propriétaire <span class="text-xs text-slate-400 font-normal">| Gestion de l'Agenda</span></h1>
+            <div id="store-badge" class="text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300">
+                Vérification...
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+        <!-- Alerte d'accès refusé -->
+        <div id="auth-error" class="hidden bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-2xl text-center max-w-lg mx-auto mt-20">
+            <h2 class="text-xl font-bold mb-2">Accès non autorisé</h2>
+            <p class="text-sm">Le lien d'accès est invalide ou le jeton de sécurité (token) est manquant. Veuillez utiliser le lien sécurisé fourni lors de la livraison de votre site.</p>
+        </div>
+
+        <!-- Section de Gestion de l'Agenda -->
+        <section id="dashboard-content" class="hidden mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">Agenda et Créneaux</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Formulaire d'ajout de créneau -->
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 h-fit shadow-xl">
+                    <h3 class="text-lg font-medium mb-4 text-slate-200">Ouvrir un créneau</h3>
+                    <form id="slot-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Date</label>
+                            <input type="date" id="slot-date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-slate-400 mb-1">Heure</label>
+                            <input type="time" id="slot-time" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                        </div>
+                        <button type="submit" class="w-full bg-white hover:bg-slate-200 font-medium py-2.5 rounded-xl transition text-slate-950">Ajouter au planning</button>
+                    </form>
+                </div>
+
+                <!-- Liste des créneaux et réservations clients -->
+                <div class="lg:col-span-2 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col">
+                    <h3 class="text-lg font-medium mb-4 text-slate-200">Vos créneaux et rendez-vous clients</h3>
+                    <div id="slots-list" class="space-y-3 overflow-y-auto max-h-[550px] pr-1">
+                        <p class="text-slate-500 text-sm">Chargement des créneaux...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const storeId = urlParams.get('store');
+        const token = urlParams.get('token');
+
+        const API_URL = 'http://localhost:3000';
+
+        if (!storeId || !token) {
+            document.getElementById('store-badge').innerText = "Accès refusé";
+            document.getElementById('auth-error').classList.remove('hidden');
+        } else {
+            document.getElementById('store-badge').innerText = `Boutique / Pro : ${storeId}`;
+            document.getElementById('dashboard-content').classList.remove('hidden');
+            loadAppointments();
+        }
+
+        // Charger les créneaux
+        async function loadAppointments() {
+            try {
+                const res = await fetch(`${API_URL}/api/appointments/${storeId}`);
+                const data = await res.json();
+                const container = document.getElementById('slots-list');
+                
+                if(!data.slots || data.slots.length === 0) {
+                    container.innerHTML = `<p class="text-slate-500 text-sm py-4 text-center">Aucun créneau disponible pour le moment.</p>`;
+                    return;
+                }
+
+                container.innerHTML = data.slots.map(s => `
+                    <div class="flex items-center justify-between bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div>
+                            <div class="flex items-center space-x-3">
+                                <span class="font-medium text-white">📅 ${s.date} à ${s.time}</span>
+                                ${s.booked ? '<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-lg font-medium">Réservé</span>' : '<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-2.5 py-1 rounded-lg font-medium">Disponible</span>'}
+                            </div>
+                            ${s.booked && s.clientInfo ? `
+                                <p class="text-xs text-slate-400 mt-2">Client : <strong class="text-slate-200">${s.clientInfo.clientName}</strong> (${s.clientInfo.clientPhone})</p>
+                            ` : ''}
+                        </div>
+                        <button onclick="deleteSlot('${s.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-3 py-1.5 rounded-lg text-sm transition">Supprimer</button>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error("Erreur de chargement", err);
+            }
+        }
+
+        // Ajouter un créneau de disponibilité
+        document.getElementById('slot-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const date = document.getElementById('slot-date').value;
+            const time = document.getElementById('slot-time').value;
+
+            const res = await fetch(`${API_URL}/api/appointments/${storeId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ date, time, token })
+            });
+
+            if(res.ok) {
+                document.getElementById('slot-form').reset();
+                loadAppointments();
+            } else {
+                alert("Erreur : Action non autorisée (Jeton invalide).");
+            }
+        });
+
+        // Supprimer un créneau
+        async function deleteSlot(slotId) {
+            const res = await fetch(`${API_URL}/api/appointments/${storeId}/${slotId}?token=${token}`, {
+                method: 'DELETE'
+            });
+            if(res.ok) {
+                loadAppointments();
+            } else {
+                alert("Erreur : Suppression non autorisée.");
+            }
+        }
+    </script>
+</body>
+</html>

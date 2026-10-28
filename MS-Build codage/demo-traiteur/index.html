@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Les Délices de Moselle — Traiteur haut de gamme en Moselle. Mariages, banquets, cocktails, buffets et plateaux-repas professionnels.">
+
+    <title>Les Délices de Moselle | Traiteur Premium</title>
+
+    <!-- =========================================================
+         POLICES
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- =========================================================
+         ICÔNES
+    ========================================================== -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* =========================================================
+           VARIABLES
+        ========================================================== */
+
+        :root {
+            --background: #05080d;
+            --background-2: #080e17;
+            --card: #0d151f;
+
+            --blue: #007bff;
+            --blue-light: #39a7ff;
+            --blue-glow: rgba(0, 123, 255, .35);
+
+            --white: #ffffff;
+            --text: #e8edf4;
+            --muted: #8995a5;
+
+            --border: rgba(255,255,255,.09);
+
+            --radius: 20px;
+
+            --transition: .35s cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::selection {
+            background: var(--blue);
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+
+        /* =========================================================
+           GLOBAL
+        ========================================================== */
+
+        section {
+            position: relative;
+        }
+
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-heading {
+            max-width: 720px;
+            margin: 0 auto 65px;
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            color: var(--blue-light);
+
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+        }
+
+        .section-tag::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--blue-light);
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(2.4rem, 5vw, 4rem);
+
+            line-height: 1.08;
+
+            margin-bottom: 18px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: .98rem;
+        }
+
+
+        /* =========================================================
+           BUTTONS
+        ========================================================== */
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 14px 23px;
+
+            border-radius: 10px;
+
+            font-size: .82rem;
+            font-weight: 700;
+
+            border: 1px solid transparent;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            color: white;
+
+            background: linear-gradient(
+                135deg,
+                var(--blue),
+                var(--blue-light)
+            );
+
+            box-shadow:
+                0 12px 35px rgba(0,123,255,.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 18px 45px rgba(0,123,255,.4);
+        }
+
+        .btn-outline {
+            color: white;
+
+            border-color: var(--border);
+
+            background: rgba(255,255,255,.035);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue);
+
+            background: rgba(0,123,255,.08);
+
+            transform: translateY(-3px);
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================== */
+
+        header {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            z-index: 1000;
+
+            background: rgba(5,8,13,.72);
+
+            border-bottom: 1px solid rgba(255,255,255,.06);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            transition: .3s ease;
+        }
+
+        .navbar {
+            height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-size: .95rem;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blue),
+                    #004da5
+                );
+
+            box-shadow:
+                0 0 25px rgba(0,123,255,.3);
+        }
+
+        .logo strong {
+            color: var(--blue-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 29px;
+        }
+
+        .nav-links > a:not(.btn) {
+            color: #9da9b8;
+
+            font-size: .78rem;
+            font-weight: 600;
+
+            transition: var(--transition);
+        }
+
+        .nav-links > a:not(.btn):hover {
+            color: white;
+        }
+
+        .nav-links .btn {
+            margin-left: 5px;
+        }
+
+        .mobile-menu {
+            display: none;
+
+            width: 43px;
+            height: 43px;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(255,255,255,.04);
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding-top: 78px;
+
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -2;
+
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(5,8,13,.97) 0%,
+                    rgba(5,8,13,.82) 38%,
+                    rgba(5,8,13,.42) 70%,
+                    rgba(5,8,13,.78) 100%
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2200&q=90");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: -1;
+
+            background:
+                radial-gradient(
+                    circle at 75% 45%,
+                    rgba(0,123,255,.16),
+                    transparent 30%
+                );
+        }
+
+        .hero-content {
+            max-width: 760px;
+
+            padding: 100px 0;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 13px;
+
+            border: 1px solid rgba(57,167,255,.25);
+
+            border-radius: 50px;
+
+            color: #7bc4ff;
+
+            background: rgba(0,123,255,.07);
+
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero-badge span {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #35e993;
+
+            box-shadow:
+                0 0 12px #35e993;
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(3.5rem, 7vw, 7rem);
+
+            line-height: .94;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 28px;
+        }
+
+        .hero h1 span {
+            display: block;
+
+            color: transparent;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff,
+                    #54b3ff
+                );
+
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .hero-description {
+            max-width: 630px;
+
+            color: #b1bbc8;
+
+            font-size: 1.05rem;
+
+            margin-bottom: 35px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+
+            margin-top: 45px;
+        }
+
+        .trust-item strong {
+            display: block;
+
+            font-size: 1.25rem;
+        }
+
+        .trust-item span {
+            color: #84909f;
+
+            font-size: .68rem;
+        }
+
+
+        /* =========================================================
+           PRESTATIONS
+        ========================================================== */
+
+        .services {
+            background:
+                radial-gradient(
+                    circle at 50% 0,
+                    rgba(0,123,255,.07),
+                    transparent 35%
+                );
+        }
+
+        .services-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+        .service-card {
+            position: relative;
+
+            min-height: 470px;
+
+            overflow: hidden;
+
+            border-radius: var(--radius);
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(0,123,255,.4);
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,.35);
+        }
+
+        .service-image {
+            height: 270px;
+
+            overflow: hidden;
+        }
+
+        .service-image img {
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform .8s
+                cubic-bezier(.2,.8,.2,1);
+        }
+
+        .service-card:hover
+        .service-image img {
+            transform: scale(1.09);
+        }
+
+        .service-image::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+
+            top: 190px;
+
+            height: 100px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    var(--card)
+                );
+        }
+
+        .service-content {
+            position: relative;
+
+            padding: 25px 27px 30px;
+        }
+
+        .service-icon {
+            position: absolute;
+
+            top: -28px;
+            right: 25px;
+
+            width: 52px;
+            height: 52px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blue),
+                    #0062ca
+                );
+
+            border: 3px solid var(--card);
+
+            box-shadow:
+                0 10px 25px rgba(0,123,255,.3);
+        }
+
+        .service-content h3 {
+            font-size: 1.22rem;
+
+            margin-bottom: 10px;
+        }
+
+        .service-content p {
+            color: var(--muted);
+
+            font-size: .82rem;
+        }
+
+        .service-link {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #55afff;
+
+            font-size: .73rem;
+            font-weight: 700;
+
+            margin-top: 20px;
+        }
+
+
+        /* =========================================================
+           MENU
+        ========================================================== */
+
+        .menu-section {
+            background: var(--background-2);
+        }
+
+        .menu-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+        .menu-card {
+            display: grid;
+
+            grid-template-columns: 180px 1fr;
+
+            min-height: 190px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            transition: var(--transition);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(0,123,255,.3);
+        }
+
+        .menu-image {
+            overflow: hidden;
+        }
+
+        .menu-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: transform .7s ease;
+        }
+
+        .menu-card:hover
+        .menu-image img {
+            transform: scale(1.08);
+        }
+
+        .menu-content {
+            padding: 24px;
+        }
+
+        .menu-category {
+            color: var(--blue-light);
+
+            font-size: .65rem;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+        .menu-content h3 {
+            font-family: "Playfair Display", serif;
+
+            font-size: 1.25rem;
+
+            margin-bottom: 8px;
+        }
+
+        .menu-content p {
+            color: var(--muted);
+
+            font-size: .78rem;
+        }
+
+
+        /* =========================================================
+           GALERIE
+        ========================================================== */
+
+        .gallery-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(12, 1fr);
+
+            grid-auto-rows: 250px;
+
+            gap: 16px;
+        }
+
+        .gallery-item {
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 17px;
+
+            border: 1px solid var(--border);
+
+            background: #111;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform .8s
+                cubic-bezier(.2,.8,.2,1);
+
+            filter: saturate(.9);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.09);
+
+            filter: saturate(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+            align-items: flex-end;
+
+            padding: 23px;
+
+            background:
+                linear-gradient(
+                    transparent 40%,
+                    rgba(0,0,0,.82)
+                );
+
+            pointer-events: none;
+        }
+
+        .gallery-overlay div {
+            transform: translateY(7px);
+
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover
+        .gallery-overlay div {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay small {
+            color: var(--blue-light);
+
+            font-size: .65rem;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+        .gallery-overlay h3 {
+            font-family: "Playfair Display", serif;
+
+            font-size: 1.25rem;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 7;
+        }
+
+        .gallery-item:nth-child(2) {
+            grid-column: span 5;
+        }
+
+        .gallery-item:nth-child(3) {
+            grid-column: span 4;
+        }
+
+        .gallery-item:nth-child(4) {
+            grid-column: span 4;
+        }
+
+        .gallery-item:nth-child(5) {
+            grid-column: span 4;
+        }
+
+        .gallery-item:nth-child(6) {
+            grid-column: span 8;
+        }
+
+        .gallery-item:nth-child(7) {
+            grid-column: span 4;
+        }
+
+
+        /* =========================================================
+           CONTACT
+        ========================================================== */
+
+        .contact-section {
+            background:
+                radial-gradient(
+                    circle at 80% 50%,
+                    rgba(0,123,255,.09),
+                    transparent 35%
+                );
+        }
+
+        .contact-grid {
+            display: grid;
+
+            grid-template-columns:
+                .8fr 1.2fr;
+
+            gap: 70px;
+
+            align-items: start;
+        }
+
+        .contact-copy h2 {
+            font-family: "Playfair Display", serif;
+
+            font-size: clamp(2.4rem, 4vw, 3.6rem);
+
+            line-height: 1.08;
+
+            margin-bottom: 20px;
+        }
+
+        .contact-copy > p {
+            color: var(--muted);
+
+            font-size: .9rem;
+
+            margin-bottom: 35px;
+        }
+
+        .contact-detail {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            width: 46px;
+            height: 46px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            color: var(--blue-light);
+
+            background:
+                rgba(0,123,255,.09);
+
+            border:
+                1px solid rgba(0,123,255,.14);
+        }
+
+        .contact-detail small {
+            display: block;
+
+            color: #6f7b8b;
+
+            font-size: .65rem;
+        }
+
+        .contact-detail strong {
+            font-size: .82rem;
+        }
+
+        .contact-form {
+            padding: 34px;
+
+            border-radius: 22px;
+
+            border: 1px solid var(--border);
+
+            background:
+                rgba(255,255,255,.025);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.2);
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 17px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+
+            color: #aeb8c5;
+
+            font-size: .7rem;
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+        .input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border-radius: 9px;
+
+            border: 1px solid
+                rgba(255,255,255,.09);
+
+            outline: none;
+
+            color: white;
+
+            background:
+                rgba(0,0,0,.2);
+
+            transition: var(--transition);
+        }
+
+        .input::placeholder {
+            color: #586576;
+        }
+
+        .input:focus {
+            border-color: var(--blue);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0,123,255,.1);
+        }
+
+        select.input option {
+            background: #0d151f;
+        }
+
+        textarea.input {
+            min-height: 145px;
+
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+
+            margin-top: 3px;
+        }
+
+        .success-message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            color: #62e99c;
+
+            background:
+                rgba(49,233,129,.07);
+
+            font-size: .75rem;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================== */
+
+        footer {
+            padding: 60px 0 25px;
+
+            border-top: 1px solid var(--border);
+
+            background: #03060a;
+        }
+
+        .footer-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.5fr 1fr 1fr;
+
+            gap: 60px;
+
+            padding-bottom: 45px;
+        }
+
+        .footer-description {
+            max-width: 370px;
+
+            color: #6e7988;
+
+            font-size: .78rem;
+
+            margin-top: 18px;
+        }
+
+        .footer-title {
+            font-size: .78rem;
+
+            margin-bottom: 17px;
+        }
+
+        .footer-links {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .footer-links a {
+            color: #687382;
+
+            font-size: .73rem;
+
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--blue-light);
+        }
+
+        .socials {
+            display: flex;
+
+            gap: 9px;
+        }
+
+        .social {
+            width: 39px;
+            height: 39px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            color: #7b8796;
+
+            border: 1px solid var(--border);
+
+            transition: var(--transition);
+        }
+
+        .social:hover {
+            color: white;
+
+            background:
+                rgba(0,123,255,.1);
+
+            border-color: var(--blue);
+
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding-top: 24px;
+
+            border-top:
+                1px solid var(--border);
+
+            color: #505b6a;
+
+            font-size: .65rem;
+        }
+
+        .footer-bottom strong {
+            color: #7e8a99;
+        }
+
+
+        /* =========================================================
+           SCROLL REVEAL
+        ========================================================== */
+
+        .reveal {
+            opacity: 0;
+
+            transform: translateY(30px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media(max-width: 950px) {
+
+            .nav-links {
+                position: absolute;
+
+                top: 78px;
+
+                left: 4%;
+                right: 4%;
+
+                display: none;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 2px;
+
+                padding: 15px;
+
+                border-radius: 15px;
+
+                border: 1px solid var(--border);
+
+                background:
+                    rgba(5,8,13,.97);
+
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links > a:not(.btn) {
+                padding: 12px;
+            }
+
+            .nav-links .btn {
+                margin: 8px 0 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                min-height: 420px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+        }
+
+
+        @media(max-width: 700px) {
+
+            .section {
+                padding: 85px 0;
+            }
+
+            .hero-background {
+                background-position: 62% center;
+
+                background-image:
+                    linear-gradient(
+                        90deg,
+                        rgba(5,8,13,.94),
+                        rgba(5,8,13,.68)
+                    ),
+                    url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1400&q=85");
+            }
+
+            .hero-content {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                font-size: clamp(3rem, 15vw, 5rem);
+
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: .9rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .hero-trust {
+                justify-content: space-between;
+
+                width: 100%;
+
+                gap: 15px;
+            }
+
+            .trust-item strong {
+                font-size: 1rem;
+            }
+
+            .trust-item span {
+                font-size: .58rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-card {
+                grid-template-columns: 130px 1fr;
+            }
+
+            .menu-content {
+                padding: 18px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+
+                grid-auto-rows: 190px;
+            }
+
+            .gallery-item:nth-child(n) {
+                grid-column: span 1;
+            }
+
+            .gallery-item:nth-child(1),
+            .gallery-item:nth-child(6) {
+                grid-column: span 2;
+            }
+
+            .gallery-overlay {
+                padding: 15px;
+            }
+
+            .gallery-overlay h3 {
+                font-size: 1rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .contact-form {
+                padding: 22px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+
+                text-align: center;
+            }
+        }
+
+        @media(max-width: 470px) {
+
+            .menu-card {
+                display: block;
+            }
+
+            .menu-image {
+                height: 190px;
+            }
+
+            .menu-content {
+                padding: 20px;
+            }
+
+            .gallery-grid {
+                grid-auto-rows: 165px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =============================================================
+     HEADER
+============================================================== -->
+
+<header id="header">
+
+    <div class="container navbar">
+
+        <a href="#accueil" class="logo">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-utensils"></i>
+            </div>
+
+            <div>
+                Les Délices <strong>de Moselle</strong>
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links" id="navLinks">
+
+            <a href="#accueil">Accueil</a>
+
+            <a href="#prestations">Nos Prestations</a>
+
+            <a href="#menu">Le Menu</a>
+
+            <a href="#galerie">Galerie</a>
+
+            <a href="#contact">Contact</a>
+
+            <a href="#contact" class="btn btn-primary">
+                <i class="fa-solid fa-paper-plane"></i>
+                Demander un devis
+            </a>
+
+        </nav>
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+            aria-label="Ouvrir le menu">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =============================================================
+     HERO
+============================================================== -->
+
+<section class="hero" id="accueil">
+
+    <div class="hero-background"></div>
+
+
+    <div class="container">
+
+        <div class="hero-content reveal">
+
+            <div class="hero-badge">
+
+                <span></span>
+
+                Traiteur événementiel • Moselle
+
+            </div>
+
+
+            <h1>
+
+                L'art du goût.
+
+                <span>
+                    L'émotion en plus.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Mariages, banquets, cocktails et plateaux-repas professionnels :
+                une cuisine artisanale et raffinée imaginée en Moselle
+                pour transformer chaque réception en souvenir inoubliable.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a href="#contact" class="btn btn-primary">
+
+                    Réserver une prestation
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+                <a href="#menu" class="btn btn-outline">
+
+                    Découvrir notre carte
+
+                    <i class="fa-solid fa-utensils"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="hero-trust">
+
+                <div class="trust-item">
+
+                    <strong>100%</strong>
+
+                    <span>
+                        Cuisine passionnée
+                    </span>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <strong>Sur mesure</strong>
+
+                    <span>
+                        Chaque événement
+                    </span>
+
+                </div>
+
+
+                <div class="trust-item">
+
+                    <strong>Moselle</strong>
+
+                    <span>
+                        Savoir-faire local
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =============================================================
+     PRESTATIONS
+============================================================== -->
+
+<section class="section services" id="prestations">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                Nos prestations
+            </div>
+
+            <h2>
+                Des expériences culinaires
+                qui commencent bien avant la première bouchée.
+            </h2>
+
+            <p>
+                Une cuisine généreuse et élégante, accompagnée d'un service
+                pensé pour que vous puissiez profiter pleinement de votre événement.
+            </p>
+
+        </div>
+
+
+        <div class="services-grid">
+
+
+            <!-- MARIAGE -->
+
+            <article class="service-card reveal">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=85"
+                        alt="Réception élégante pour un mariage"
+                        loading="lazy">
+
+                </div>
+
+
+                <div class="service-content">
+
+                    <div class="service-icon">
+
+                        <i class="fa-solid fa-champagne-glasses"></i>
+
+                    </div>
+
+                    <h3>
+                        Mariages & Événements
+                    </h3>
+
+                    <p>
+                        Cocktail, vin d'honneur, repas de mariage et réception privée.
+                        Nous créons une prestation entièrement personnalisée
+                        pour votre grand jour.
+                    </p>
+
+                    <a href="#contact" class="service-link">
+
+                        Imaginer mon événement
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- ENTREPRISE -->
+
+            <article class="service-card reveal">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
+                        alt="Repas gastronomique professionnel"
+                        loading="lazy">
+
+                </div>
+
+
+                <div class="service-content">
+
+                    <div class="service-icon">
+
+                        <i class="fa-solid fa-briefcase"></i>
+
+                    </div>
+
+                    <h3>
+                        Repas d'Entreprise
+                    </h3>
+
+                    <p>
+                        Plateaux-repas premium, déjeuners professionnels,
+                        séminaires et événements d'entreprise avec une logistique
+                        adaptée à vos contraintes.
+                    </p>
+
+                    <a href="#contact" class="service-link">
+
+                        Demander une offre
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- BUFFET -->
+
+            <article class="service-card reveal">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1000&q=85"
+                        alt="Buffet et pièces cocktail"
+                        loading="lazy">
+
+                </div>
+
+
+                <div class="service-content">
+
+                    <div class="service-icon">
+
+                        <i class="fa-solid fa-bowl-food"></i>
+
+                    </div>
+
+                    <h3>
+                        Cocktails & Buffets
+                    </h3>
+
+                    <p>
+                        Pièces cocktail, buffets froids et chauds, mignardises
+                        et créations du chef pour des réceptions conviviales
+                        et élégantes.
+                    </p>
+
+                    <a href="#contact" class="service-link">
+
+                        Découvrir nos formules
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =============================================================
+     MENU
+============================================================== -->
+
+<section class="section menu-section" id="menu">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                Le menu
+            </div>
+
+            <h2>
+                Quelques créations
+                pour vous mettre en appétit.
+            </h2>
+
+            <p>
+                Notre carte évolue avec les saisons et les inspirations du chef.
+                Voici quelques exemples de créations proposées.
+            </p>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <article class="menu-card reveal">
+
+                <div class="menu-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=700&q=85"
+                        alt="Assiette gastronomique colorée"
+                        loading="lazy">
+
+                </div>
+
+                <div class="menu-content">
+
+                    <div class="menu-category">
+                        Entrée
+                    </div>
+
+                    <h3>
+                        Saumon gravlax maison
+                    </h3>
+
+                    <p>
+                        Crème citronnée, herbes fraîches,
+                        légumes croquants et pickles maison.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="menu-card reveal">
+
+                <div class="menu-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=700&q=85"
+                        alt="Plat raffiné de viande"
+                        loading="lazy">
+
+                </div>
+
+                <div class="menu-content">
+
+                    <div class="menu-category">
+                        Plat
+                    </div>
+
+                    <h3>
+                        Filet de bœuf rôti
+                    </h3>
+
+                    <p>
+                        Jus corsé, pommes grenaille rôties,
+                        légumes de saison et sauce du chef.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="menu-card reveal">
+
+                <div class="menu-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=700&q=85"
+                        alt="Cuisine gastronomique"
+                        loading="lazy">
+
+                </div>
+
+                <div class="menu-content">
+
+                    <div class="menu-category">
+                        Création
+                    </div>
+
+                    <h3>
+                        Suprême de volaille fermière
+                    </h3>
+
+                    <p>
+                        Sauce forestière, écrasé de pommes de terre
+                        et jeunes pousses.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="menu-card reveal">
+
+                <div class="menu-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=700&q=85"
+                        alt="Cuisine fraîche et raffinée"
+                        loading="lazy">
+
+                </div>
+
+                <div class="menu-content">
+
+                    <div class="menu-category">
+                        Dessert
+                    </div>
+
+                    <h3>
+                        Chocolat & noisette
+                    </h3>
+
+                    <p>
+                        Biscuit moelleux, mousse chocolat noir,
+                        praliné et éclats de noisettes.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =============================================================
+     GALERIE
+============================================================== -->
+
+<section class="section" id="galerie">
+
+    <div class="container">
+
+
+        <div class="section-heading reveal">
+
+            <div class="section-tag">
+                Galerie
+            </div>
+
+            <h2>
+                Des assiettes qui donnent
+                envie de passer à table.
+            </h2>
+
+            <p>
+                Une cuisine où le goût rencontre la présentation,
+                pensée pour impressionner vos invités dès le premier regard.
+            </p>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1400&q=85"
+                    alt="Table gastronomique"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Gastronomie
+                        </small>
+
+                        <h3>
+                            L'élégance à table
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=85"
+                    alt="Assiette fraîche et raffinée"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Cuisine
+                        </small>
+
+                        <h3>
+                            Fraîcheur & couleurs
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=85"
+                    alt="Plat gastronomique"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Création
+                        </small>
+
+                        <h3>
+                            Le plat du chef
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=1000&q=85"
+                    alt="Cuisine raffinée"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Savoir-faire
+                        </small>
+
+                        <h3>
+                            Produits & précision
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1000&q=85"
+                    alt="Produits frais"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Produits frais
+                        </small>
+
+                        <h3>
+                            La saison dans l'assiette
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1400&q=85"
+                    alt="Buffet convivial"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Réception
+                        </small>
+
+                        <h3>
+                            Des moments à partager
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&q=85"
+                    alt="Restaurant gastronomique"
+                    loading="lazy">
+
+                <div class="gallery-overlay">
+
+                    <div>
+
+                        <small>
+                            Expérience
+                        </small>
+
+                        <h3>
+                            L'art de recevoir
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =============================================================
+     CONTACT
+============================================================== -->
+
+<section class="section contact-section" id="contact">
+
+    <div class="container contact-grid">
+
+
+        <div class="contact-copy reveal">
+
+            <div class="section-tag">
+                Parlons de votre projet
+            </div>
+
+            <h2>
+                Votre événement mérite
+                une cuisine à sa hauteur.
+            </h2>
+
+            <p>
+                Mariage, repas d'entreprise, anniversaire ou grand banquet :
+                décrivez-nous votre projet et imaginons ensemble
+                une prestation qui vous ressemble.
+            </p>
+
+
+            <div class="contact-detail">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+
+                    <small>
+                        Zone d'intervention
+                    </small>
+
+                    <strong>
+                        Moselle & Grand Est
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-detail">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <div>
+
+                    <small>
+                        Email
+                    </small>
+
+                    <strong>
+                        contact@lesdelices-moselle.fr
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="contact-detail">
+
+                <div class="contact-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                <div>
+
+                    <small>
+                        Téléphone
+                    </small>
+
+                    <strong>
+                        03 87 00 00 00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <form
+            class="contact-form reveal"
+            id="contactForm">
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Nom & prénom
+                    </label>
+
+                    <input
+                        id="name"
+                        class="input"
+                        type="text"
+                        placeholder="Jean Dupont"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        class="input"
+                        type="email"
+                        placeholder="jean@email.fr"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Téléphone
+                    </label>
+
+                    <input
+                        id="phone"
+                        class="input"
+                        type="tel"
+                        placeholder="06 00 00 00 00">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="event">
+                        Type d'événement
+                    </label>
+
+                    <select
+                        id="event"
+                        class="input"
+                        required>
+
+                        <option value="">
+                            Sélectionnez...
+                        </option>
+
+                        <option>
+                            Mariage
+                        </option>
+
+                        <option>
+                            Anniversaire
+                        </option>
+
+                        <option>
+                            Repas d'entreprise
+                        </option>
+
+                        <option>
+                            Banquet
+                        </option>
+
+                        <option>
+                            Cocktail / Buffet
+                        </option>
+
+                        <option>
+                            Autre
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label for="message">
+                        Votre projet
+                    </label>
+
+                    <textarea
+                        id="message"
+                        class="input"
+                        placeholder="Date, nombre de personnes, lieu, type de repas, envies particulières..."
+                        required></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary form-submit">
+
+                Envoyer ma demande
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+            </button>
+
+
+            <div
+                class="success-message"
+                id="successMessage">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Merci ! Votre demande a bien été enregistrée.
+                Ce formulaire est actuellement en mode démonstration.
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =============================================================
+     FOOTER
+============================================================== -->
+
+<footer>
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div>
+
+                <a href="#accueil" class="logo">
+
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+
+                    <div>
+                        Les Délices <strong>de Moselle</strong>
+                    </div>
+
+                </a>
+
+
+                <p class="footer-description">
+
+                    Traiteur événementiel haut de gamme en Moselle.
+                    Une cuisine généreuse, élégante et imaginée
+                    pour vos plus beaux moments.
+
+                </p>
+
+            </div>
+
+
+
+            <div>
+
+                <h4 class="footer-title">
+                    Navigation
+                </h4>
+
+                <div class="footer-links">
+
+                    <a href="#accueil">
+                        Accueil
+                    </a>
+
+                    <a href="#prestations">
+                        Nos Prestations
+                    </a>
+
+                    <a href="#menu">
+                        Le Menu
+                    </a>
+
+                    <a href="#galerie">
+                        Galerie
+                    </a>
+
+                    <a href="#contact">
+                        Contact
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div>
+
+                <h4 class="footer-title">
+                    Suivez-nous
+                </h4>
+
+                <div class="socials">
+
+                    <a href="#"
+                       class="social"
+                       aria-label="Facebook">
+
+                        <i class="fa-brands fa-facebook-f"></i>
+
+                    </a>
+
+                    <a href="#"
+                       class="social"
+                       aria-label="Instagram">
+
+                        <i class="fa-brands fa-instagram"></i>
+
+                    </a>
+
+                    <a href="#"
+                       class="social"
+                       aria-label="LinkedIn">
+
+                        <i class="fa-brands fa-linkedin-in"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Les Délices de Moselle — Tous droits réservés.
+            </span>
+
+            <span>
+
+                <a href="#">
+                    Mentions légales
+                </a>
+
+                &nbsp; • &nbsp;
+
+                <a href="#">
+                    Politique de confidentialité
+                </a>
+
+            </span>
+
+            <span>
+                Propulsé par <strong>M.SCHULER-Dev</strong>
+            </span>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<!-- =============================================================
+     JAVASCRIPT
+============================================================== -->
+
+<script>
+
+    /* =========================================================
+       MENU MOBILE
+    ========================================================== */
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const navLinks =
+        document.getElementById("navLinks");
+
+
+    mobileMenu.addEventListener("click", () => {
+
+        navLinks.classList.toggle("active");
+
+        const icon =
+            mobileMenu.querySelector("i");
+
+        if (navLinks.classList.contains("active")) {
+
+            icon.classList.remove("fa-bars");
+
+            icon.classList.add("fa-xmark");
+
+        } else {
+
+            icon.classList.remove("fa-xmark");
+
+            icon.classList.add("fa-bars");
+
+        }
+
+    });
+
+
+    /* Fermer le menu après navigation */
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("active");
+
+                const icon =
+                    mobileMenu.querySelector("i");
+
+                icon.classList.remove("fa-xmark");
+
+                icon.classList.add("fa-bars");
+
+            });
+
+        });
+
+
+
+    /* =========================================================
+       HEADER AU SCROLL
+    ========================================================== */
+
+    const header =
+        document.getElementById("header");
+
+
+    window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 40) {
+
+            header.style.background =
+                "rgba(3,7,12,.94)";
+
+        } else {
+
+            header.style.background =
+                "rgba(5,8,13,.72)";
+
+        }
+
+    });
+
+
+
+    /* =========================================================
+       ANIMATION DES ELEMENTS AU SCROLL
+    ========================================================== */
+
+    const observer =
+        new IntersectionObserver(
+
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target
+                            .classList
+                            .add("show");
+
+                        observer
+                            .unobserve(entry.target);
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold: .12
+            }
+
+        );
+
+
+    document
+        .querySelectorAll(".reveal")
+        .forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+
+
+    /* =========================================================
+       FORMULAIRE DEMO
+    ========================================================== */
+
+    const contactForm =
+        document.getElementById("contactForm");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+
+    contactForm.execute = contactForm.addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        successMessage.style.display =
+            "block";
+
+
+        const button =
+            contactForm.querySelector("button");
+
+
+        button.innerHTML =
+            '<i class="fa-solid fa-check"></i> Demande préparée';
+
+
+        contactForm.reset();
+
+
+        setTimeout(() => {
+
+            button.innerHTML =
+                'Envoyer ma demande <i class="fa-solid fa-paper-plane"></i>';
+
+        }, 3500);
+
+    });
+
+
+
+    /* =========================================================
+       ANNEE AUTOMATIQUE
+    ========================================================== */
+
+    const currentYear =
+        new Date().getFullYear();
+
+
+    document
+        .querySelector(".footer-bottom span")
+        .innerHTML =
+        `© ${currentYear} Les Délices de Moselle — Tous droits réservés.`;
+
+</script>
+
+
+</body>
+</html>

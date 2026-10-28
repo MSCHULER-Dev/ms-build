@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Propriétaire - Gestion du Catalogue et des Stocks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wider text-white">Espace Propriétaire <span class="text-xs text-slate-400 font-normal">| Catalogue & Stocks</span></h1>
+            <div id="store-badge" class="text-sm bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300">
+                Vérification...
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        
+        <!-- Alerte d'accès refusé -->
+        <div id="auth-error" class="hidden bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-2xl text-center max-w-lg mx-auto mt-20">
+            <h2 class="text-xl font-bold mb-2">Accès non autorisé</h2>
+            <p class="text-sm">Le lien d'accès est invalide ou le jeton de sécurité (token) est manquant. Veuillez utiliser le lien sécurisé fourni lors de la livraison de votre site.</p>
+        </div>
+
+        <!-- Section Dashboard -->
+        <section id="dashboard-content" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Formulaire d'ajout de produit -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 h-fit shadow-xl">
+                <h3 class="text-lg font-medium mb-4 text-slate-200">Ajouter un produit</h3>
+                <form id="product-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Nom du produit</label>
+                        <input type="text" id="prod-name" required placeholder="Ex: T-shirt Premium" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Prix (€)</label>
+                        <input type="number" step="0.01" id="prod-price" required placeholder="29.99" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Quantité en stock</label>
+                        <input type="number" id="prod-stock" required value="10" min="0" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">URL de l'image (optionnel)</label>
+                        <input type="url" id="prod-image" placeholder="https://..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Description</label>
+                        <textarea id="prod-desc" rows="2" placeholder="Courte description..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white focus:border-slate-500 focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-white hover:bg-slate-200 font-medium py-2.5 rounded-xl transition text-slate-950">Ajouter au catalogue</button>
+                </form>
+            </div>
+
+            <!-- Liste des produits et gestion des stocks -->
+            <div class="lg:col-span-2 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col">
+                <h3 class="text-lg font-medium mb-4 text-slate-200">Catalogue et Stocks en direct</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 text-sm">
+                                <th class="py-3 px-4">Produit</th>
+                                <th class="py-3 px-4">Prix</th>
+                                <th class="py-3 px-4">Stock</th>
+                                <th class="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body" class="divide-y divide-slate-800/60 text-sm">
+                            <tr>
+                                <td colspan="4" class="py-4 text-center text-slate-500">Chargement...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const storeId = urlParams.get('store');
+        const token = urlParams.get('token');
+
+        const API_URL = 'http://localhost:3000';
+
+        if (!storeId || !token) {
+            document.getElementById('store-badge').innerText = "Accès refusé";
+            document.getElementById('auth-error').classList.remove('hidden');
+        } else {
+            document.getElementById('store-badge').innerText = `Boutique : ${storeId}`;
+            document.getElementById('dashboard-content').classList.remove('hidden');
+            loadProducts();
+        }
+
+        // Charger les produits
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_URL}/api/products/${storeId}`);
+                const data = await res.json();
+                const tbody = document.getElementById('products-table-body');
+                
+                if(!data.products || data.products.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-500">Aucun produit dans votre catalogue.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.products.map(p => `
+                    <tr class="hover:bg-slate-800/30 transition">
+                        <td class="py-3 px-4 flex items-center space-x-3">
+                            <img src="${p.imageUrl}" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-800">
+                            <div>
+                                <div class="font-medium text-white">${p.name}</div>
+                                <div class="text-xs text-slate-400 truncate max-w-xs">${p.description || ''}</div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-200">${p.price.toFixed(2)} €</td>
+                        <td class="py-3 px-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-semibold ${p.stock > 5 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : p.stock > 0 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}">
+                                    ${p.stock > 0 ? p.stock + ' en stock' : 'Rupture'}
+                                </span>
+                                <input type="number" value="${p.stock}" min="0" onchange="updateStock('${p.id}', this.value)" class="w-16 bg-slate-950 border border-slate-800 rounded-lg px-2 py-1 text-white text-center text-xs focus:outline-none focus:border-slate-500">
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="deleteProduct('${p.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-3 py-1.5 rounded-lg text-xs transition">Supprimer</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error("Erreur de chargement", err);
+            }
+        }
+
+        // Ajouter un produit
+        document.getElementById('product-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('prod-name').value;
+            const price = document.getElementById('prod-price').value;
+            const stock = document.getElementById('prod-stock').value;
+            const imageUrl = document.getElementById('prod-image').value;
+            const description = document.getElementById('prod-desc').value;
+
+            const res = await fetch(`${API_URL}/api/products/${storeId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, price, stock, imageUrl, description, token })
+            });
+
+            if(res.ok) {
+                document.getElementById('product-form').reset();
+                document.getElementById('prod-stock').value = "10"; // reset par défaut
+                loadProducts();
+            } else {
+                alert("Erreur : Action non autorisée (Jeton invalide).");
+            }
+        });
+
+        // Mettre à jour le stock en direct
+        async function updateStock(productId, newStock) {
+            const res = await fetch(`${API_URL}/api/products/${storeId}/${productId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stock: newStock, token })
+            });
+
+            if(res.ok) {
+                loadProducts();
+            } else {
+                alert("Erreur lors de la mise à jour du stock.");
+            }
+        }
+
+        // Supprimer un produit
+        async function deleteProduct(productId) {
+            const res = await fetch(`${API_URL}/api/products/${storeId}/${productId}?token=${token}`, {
+                method: 'DELETE'
+            });
+            if(res.ok) {
+                loadProducts();
+            } else {
+                alert("Erreur : Suppression non autorisée.");
+            }
+        }
+    </script>
+</body>
+</html>
